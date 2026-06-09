@@ -1,96 +1,94 @@
-let chart;
+let randomNumber =
+Math.floor(Math.random()*100)+1;
 
-function calculateEMI(){
+let attempts = 0;
 
-    let P = parseFloat(
-        document.getElementById("loanAmount").value
-    );
+let bestScore =
+localStorage.getItem("bestScore") || "-";
 
-    let annualRate = parseFloat(
-        document.getElementById("interestRate").value
-    );
+document.getElementById("bestScore").innerText =
+bestScore;
 
-    let N = parseInt(
-        document.getElementById("loanTenure").value
-    );
+function checkGuess(){
 
-    if(!P || !annualRate || !N){
+let guess =
+parseInt(
+document.getElementById("guessInput").value
+);
 
-        alert("Please fill all fields");
+if(isNaN(guess)){
 
-        return;
-    }
+document.getElementById("message").innerHTML =
+"⚠️ Please enter a valid number.";
 
-    let R = annualRate / 12 / 100;
-
-    let EMI =
-        (P * R * Math.pow(1 + R, N))
-        /
-        (Math.pow(1 + R, N) - 1);
-
-    let totalPayment = EMI * N;
-
-    let totalInterest =
-        totalPayment - P;
-
-    document.getElementById("result").innerHTML =
-
-    `
-    <div class="result-card">
-    💰 Monthly EMI:
-    ₹${EMI.toFixed(2)}
-    </div>
-
-    <div class="result-card">
-    📈 Total Payment:
-    ₹${totalPayment.toFixed(2)}
-    </div>
-
-    <div class="result-card">
-    🏦 Total Interest:
-    ₹${totalInterest.toFixed(2)}
-    </div>
-    `;
-
-    createChart(P,totalInterest);
+return;
 }
 
-function createChart(principal,interest){
+attempts++;
 
-    let ctx =
-    document.getElementById("emiChart");
+document.getElementById("attempts").innerText =
+attempts;
 
-    if(chart){
-        chart.destroy();
-    }
+if(guess === randomNumber){
 
-    chart = new Chart(ctx,{
+document.getElementById("message").innerHTML =
 
-        type:'doughnut',
+`
+🏆 CONGRATULATIONS! 🎉<br><br>
 
-        data:{
+You guessed the correct number:
+<b>${randomNumber}</b><br>
 
-            labels:[
-                'Principal Amount',
-                'Interest Amount'
-            ],
+Completed in <b>${attempts}</b> attempts.
+`;
 
-            datasets:[{
+if(
+bestScore === "-" ||
+attempts < bestScore
+){
 
-                data:[
-                    principal,
-                    interest
-                ],
+bestScore = attempts;
 
-                backgroundColor:[
-                    '#36A2EB',
-                    '#FF6384'
-                ]
-            }]
-        },
+localStorage.setItem(
+"bestScore",
+bestScore
+);
 
-        options:{
-            responsive:true
-        }
-    });
+document.getElementById("bestScore")
+.innerText = bestScore;
+}
+
+document.body.style.background =
+"linear-gradient(135deg,#16a34a,#22c55e)";
+}
+
+else if(guess > randomNumber){
+
+document.getElementById("message").innerHTML =
+"📈 Too High! Try a smaller number.";
+}
+
+else{
+
+document.getElementById("message").innerHTML =
+"📉 Too Low! Try a bigger number.";
+}
+}
+
+function restartGame(){
+
+randomNumber =
+Math.floor(Math.random()*100)+1;
+
+attempts = 0;
+
+document.getElementById("attempts").innerText = 0;
+
+document.getElementById("guessInput").value = "";
+
+document.getElementById("message").innerHTML =
+"🤔 Start Guessing...";
+
+document.body.style.background =
+"linear-gradient(135deg,#0f172a,#1e293b,#334155)";
 }
