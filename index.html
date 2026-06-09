@@ -1,49 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Premium EMI Calculator</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Number Guessing Game</title>
 
 <link rel="stylesheet" href="style.css">
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-<div class="container">
+<div class="game-container">
 
-    <h1>🏦 Loan EMI Calculator</h1>
+<h1>🎯 Number Guessing Game</h1>
 
-    <div class="input-group">
-        <label>Loan Amount (₹)</label>
-        <input type="number" id="loanAmount" placeholder="Enter Loan Amount">
-    </div>
+<div class="instructions">
 
-    <div class="input-group">
-        <label>Interest Rate (%)</label>
-        <input type="number" id="interestRate" placeholder="Enter Interest Rate">
-    </div>
+<h3>📜 How To Play</h3>
 
-    <div class="input-group">
-        <label>Tenure (Months)</label>
-        <input type="number" id="loanTenure" placeholder="Enter Loan Tenure">
-    </div>
+<ul>
+<li>Guess a number between <b>1 and 100</b>.</li>
+<li>The game will tell you if your guess is too high or too low.</li>
+<li>Keep guessing until you find the correct number.</li>
+<li>Try to win in the fewest attempts possible.</li>
+<li>Your best score will be saved automatically.</li>
+</ul>
 
-    <button onclick="calculateEMI()">
-        Calculate EMI
-    </button>
+</div>
 
-    <div id="result"></div>
+<input
+type="number"
+id="guessInput"
+placeholder="Enter your guess"
+/>
 
-    <div class="chart-container">
-        <canvas id="emiChart"></canvas>
-    </div>
+<button onclick="checkGuess()">
+🚀 Submit Guess
+</button>
+
+<div id="message">
+🤔 Start Guessing...
+</div>
+
+<div class="stats">
+
+<div class="card">
+<p>Attempts</p>
+<h2 id="attempts">0</h2>
+</div>
+
+<div class="card">
+<p>Best Score</p>
+<h2 id="bestScore">-</h2>
+</div>
+
+</div>
+
+<button
+class="restart-btn"
+onclick="restartGame()">
+🔄 Restart Game
+</button>
+
+<div class="footer">
+Built with ❤️ by <b>Satya Ranjan</b>
+</div>
 
 </div>
 
